@@ -85,9 +85,12 @@ RUN apt-get update -qq -o Acquire::Languages=none \
         libpq-dev \
         xmlsec1
 
-RUN  
+RUN pip3 install -U \
+    pip \
+    setuptools \
+    wheel
 
-RUN poetry export -f requirements.txt --output requirements.txt
+RUN pip3 install poetry==1.2.0b1
 
 COPY --from=builder /dh-virtualenv_1.2.2-1_all.deb /
 

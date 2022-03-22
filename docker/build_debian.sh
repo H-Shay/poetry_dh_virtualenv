@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # The script to build the Debian package, as ran inside the Docker image.
-
 set -ex
 
 # Get the codename from distro env
@@ -10,6 +9,9 @@ DIST=$(cut -d ':' -f2 <<< "${distro:?}")
 # we get a read-only copy of the source: make a writeable copy
 cp -aT /synapse/source /synapse/build
 cd /synapse/build
+
+# Export a requirements.txt file for the dh-virtualenv to use
+poetry export --extras "all test" -o requirements.txt
 
 # if this is a prerelease, set the Section accordingly.
 #
